@@ -16,13 +16,13 @@ const routes: Routes = [
         './features/product-registration/product-registration.module'
       ).then((m) => m.ProductRegistrationModule),
   },
-  // Agrega más rutas aquí según sea necesario
+
   {
     path: '',
     redirectTo: '/product-list',
     pathMatch: 'full',
   },
-  // Ruta comodín para manejar rutas no encontradas
+
   {
     path: '**',
     redirectTo: '/product-list',

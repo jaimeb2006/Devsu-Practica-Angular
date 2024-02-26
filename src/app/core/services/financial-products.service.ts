@@ -1,6 +1,6 @@
 // financial-products.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { FinancialProduct } from '../models/financial-product.model'; // Asegúrate de crear este modelo
 
@@ -8,11 +8,16 @@ import { FinancialProduct } from '../models/financial-product.model'; // Asegúr
   providedIn: 'root',
 })
 export class FinancialProductsService {
-  private apiUrl = 'https://api.bancopichincha.com/financial-products'; // Reemplaza con la URL real de la API
+  private baseUrl =
+    'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products';
+  private authorId = '241'; // Replace with your generated AuthorID
 
   constructor(private http: HttpClient) {}
 
   getFinancialProducts(): Observable<FinancialProduct[]> {
-    return this.http.get<FinancialProduct[]>(this.apiUrl);
+    const headers = new HttpHeaders({
+      authorld: this.authorId,
+    });
+    return this.http.get<FinancialProduct[]>(this.baseUrl, { headers });
   }
 }
