@@ -217,3 +217,45 @@ product-table th #product-logo {
 .product-table td {
   overflow: visible;
 }
+
+.pagination {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  font-size: smaller;
+}
+
+.page-item {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.page-item span {
+  display: block;
+  padding: 5px 10px;
+  color: #102659;
+  background: #ffffff;
+  border: 1px solid #ddd;
+}
+
+.page-item.active span,
+.page-item.active span:hover {
+  color: #ffffff;
+  background-color: #102659;
+  border-color: #102659;
+}
+
+.page-item.disabled span {
+  color: #cccccc;
+  cursor: not-allowed;
+}
+
+.page-item:hover span {
+  background-color: #eeeeee;
+}
+
+.page-item.disabled:hover span {
+  background-color: transparent;
+}

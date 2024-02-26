@@ -5,6 +5,11 @@ import { Observable, map } from 'rxjs';
 import { FinancialProduct } from '../models/financial-product.model'; // Asegúrate de crear este modelo
 import { ApiResponseItem } from 'src/app/shared/api-response-types';
 
+interface PaginatedFinancialProducts {
+  products: FinancialProduct[];
+  totalRecords: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,12 +20,26 @@ export class FinancialProductsService {
 
   constructor(private http: HttpClient) {}
 
-  getFinancialProducts(): Observable<FinancialProduct[]> {
+  getFinancialProducts(
+    page: number = 1,
+    pageSize: number = 5
+  ): Observable<PaginatedFinancialProducts> {
     const headers = new HttpHeaders({
       authorId: this.authorId,
     });
-    return this.http
-      .get<ApiResponseItem[]>(this.baseUrl, { headers })
-      .pipe(map(FinancialProduct.fromApiResponse));
+    return this.http.get<ApiResponseItem[]>(this.baseUrl, { headers }).pipe(
+      map(FinancialProduct.fromApiResponse),
+
+      map((products) => {
+        const totalRecords = products.length;
+        const start = (page - 1) * pageSize;
+        const end = start + pageSize;
+        const paginatedProducts = products.slice(start, end);
+        return {
+          products: paginatedProducts,
+          totalRecords: totalRecords,
+        };
+      })
+    );
   }
 }
