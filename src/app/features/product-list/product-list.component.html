@@ -7,7 +7,9 @@
       class="search-input"
       placeholder="Search..."
     />
-    <button class="add-button">Agregar</button>
+    <button routerLink="/product-registration" class="add-button">
+      Agregar
+    </button>
   </div>
 
   <div class="container-table">
@@ -34,7 +36,11 @@
 
         <tr *ngFor="let product of financialProducts; let i = index">
           <td class="product-logo">
-            <img src="{{ product.logoUrl }}" alt="Logo" />
+            <img
+              src="{{ product.logoUrl }}"
+              alt="Logo"
+              onerror="this.onerror=null;this.src='../../../assets/image-not-found-icon-E.jpg';"
+            />
           </td>
           <td>{{ product.name }}</td>
           <td>{{ product.description }}</td>

@@ -1,7 +1,7 @@
 // financial-products.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, catchError, map, of } from 'rxjs';
 import { FinancialProduct } from '../models/financial-product.model'; // Asegúrate de crear este modelo
 import { ApiResponseItem } from 'src/app/shared/api-response-types';
 
@@ -30,7 +30,6 @@ export class FinancialProductsService {
     });
     return this.http.get<ApiResponseItem[]>(this.baseUrl, { headers }).pipe(
       map(FinancialProduct.fromApiResponse),
-
       map((products) => {
         if (searchTerm) {
           products = products.filter((product) =>
@@ -47,6 +46,35 @@ export class FinancialProductsService {
           totalRecords: totalRecords,
         };
       })
+    );
+  }
+
+  checkIfIdExists(id: string): Observable<boolean> {
+    const headers = new HttpHeaders({ authorId: this.authorId });
+    const params = new HttpParams().set('id', id);
+    const verificationUrl = `${this.baseUrl}/verification`;
+
+    return this.http.get<boolean>(verificationUrl, { headers, params }).pipe(
+      map((response) => {
+        return response;
+      }),
+      catchError((error) => {
+        console.error('Error checking if ID exists:', error);
+        return of(false); // Asegura que siempre devuelvas un Observable<boolean>
+      })
+    );
+  }
+
+  addFinancialProduct(product: FinancialProduct): Observable<FinancialProduct> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      authorId: this.authorId, // Asegúrate de que el backend requiere este header y ajusta según sea necesario
+    });
+
+    return this.http.post<FinancialProduct>(
+      this.baseUrl,
+      FinancialProduct.toDict(product),
+      { headers }
     );
   }
 }

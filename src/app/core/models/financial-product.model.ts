@@ -34,14 +34,29 @@ export class FinancialProduct implements IFinancialProduct {
 
   static fromApiResponse(data: ApiResponseItem[]): FinancialProduct[] {
     return data.map((item) => {
-      return new FinancialProduct(
-        item.id,
-        item.name,
-        item.description,
-        new Date(item.date_release),
-        new Date(item.date_revision),
-        item.logo
-      );
+      return FinancialProduct.fromData(item);
     });
+  }
+
+  static fromData(data: ApiResponseItem): FinancialProduct {
+    return new FinancialProduct(
+      data.id,
+      data.name,
+      data.description,
+      new Date(data.date_release),
+      new Date(data.date_revision),
+      data.logo
+    );
+  }
+
+  static toDict(producto: FinancialProduct): Record<string, any> {
+    return {
+      id: producto.id,
+      name: producto.name,
+      description: producto.description,
+      date_release: producto.releaseDate.toISOString(),
+      date_revision: producto.revisionDate.toISOString(),
+      logo: producto.logoUrl,
+    };
   }
 }
