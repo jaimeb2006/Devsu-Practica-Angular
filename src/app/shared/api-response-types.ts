@@ -2,7 +2,7 @@ export type ApiResponseItem = {
   id: string;
   name: string;
   description: string;
-  releaseDate: string;
-  restructuringDate: string;
-  logoUrl: string;
+  date_release: string;
+  date_revision: string;
+  logo: string;
 };

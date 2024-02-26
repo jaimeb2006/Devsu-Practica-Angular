@@ -1,22 +1,19 @@
 import { ApiResponseItem } from 'src/app/shared/api-response-types';
-
-// Interfaces para segregación y abstracción
 interface IFinancialProduct {
   id: string;
   name: string;
   description: string;
   releaseDate: Date;
-  restructuringDate: Date;
+  revisionDate: Date;
   logoUrl: string;
 }
 
-// Implementación concreta de la interfaz
 export class FinancialProduct implements IFinancialProduct {
   id: string;
   name: string;
   description: string;
   releaseDate: Date;
-  restructuringDate: Date;
+  revisionDate: Date;
   logoUrl: string;
 
   constructor(
@@ -24,28 +21,27 @@ export class FinancialProduct implements IFinancialProduct {
     name: string,
     description: string,
     releaseDate: Date,
-    restructuringDate: Date,
+    revisionDate: Date,
     logoUrl: string
   ) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.releaseDate = releaseDate;
-    this.restructuringDate = restructuringDate;
+    this.revisionDate = revisionDate;
     this.logoUrl = logoUrl;
   }
 
   static fromApiResponse(data: ApiResponseItem[]): FinancialProduct[] {
-    return data.map(
-      (item) =>
-        new FinancialProduct(
-          item.id,
-          item.name,
-          item.description,
-          new Date(item.releaseDate),
-          new Date(item.restructuringDate),
-          item.logoUrl
-        )
-    );
+    return data.map((item) => {
+      return new FinancialProduct(
+        item.id,
+        item.name,
+        item.description,
+        new Date(item.date_release),
+        new Date(item.date_revision),
+        item.logo
+      );
+    });
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FinancialProduct } from 'src/app/core/models/financial-product.model';
+import { FinancialProductsService } from '../../core/services/financial-products.service';
+import { FinancialProduct } from '../../core/models/financial-product.model';
 
 @Component({
   selector: 'app-product-list',
@@ -9,7 +10,6 @@ import { FinancialProduct } from 'src/app/core/models/financial-product.model';
 export class ProductListComponent {
   dropdownOpen = false;
   loading = true;
-  products: FinancialProduct[] = [];
   recordsPerPage = 10;
   currentPage = 10;
   totalRecords = 100;
@@ -18,63 +18,34 @@ export class ProductListComponent {
 
   lista: string[] = ['5', '10', '20'];
 
-  financialProducts: FinancialProduct[] = [
-    {
-      id: '1',
-      name: 'Nombre del producto 1',
-      description: 'Descripción 1',
-      releaseDate: new Date(2000, 0, 1),
-      restructuringDate: new Date(2001, 0, 1),
-      logoUrl:
-        'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    },
-    {
-      id: '2',
-      name: 'Nombre del producto 2',
-      description: 'Descripción 2',
-      releaseDate: new Date(2000, 0, 1),
-      restructuringDate: new Date(2001, 0, 1),
-      logoUrl:
-        'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    },
-    {
-      id: '3',
-      name: 'Nombre del producto 3',
-      description: 'Descripción 3',
-      releaseDate: new Date(2000, 0, 1),
-      restructuringDate: new Date(2001, 0, 1),
-      logoUrl:
-        'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    },
-    {
-      id: '4',
-      name: 'Nombre del producto 4',
-      description: 'Descripción 4',
-      releaseDate: new Date(2000, 0, 1),
-      restructuringDate: new Date(2001, 0, 1),
-      logoUrl:
-        'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    },
-    {
-      id: '5',
-      name: 'Nombre del producto 5',
-      description: 'Descripción 5',
-      releaseDate: new Date(2000, 0, 1),
-      restructuringDate: new Date(2001, 0, 1),
-      logoUrl:
-        'https://www.visa.com.ec/dam/VCOM/regional/lac/SPA/Default/Pay%20With%20Visa/Tarjetas/visa-signature-400x225.jpg',
-    },
-  ];
+  financialProducts: FinancialProduct[] = [];
 
   selectedDropdownIndex: number | null = null;
 
+  constructor(private financialProductService: FinancialProductsService) {}
+
   ngOnInit() {
-    // Simula la carga de datos con un retraso
-    setTimeout(() => {
-      this.loading = false;
-      this.products = this.financialProducts;
-    }, 100);
+    this.loadFinancialProducts();
     this.numeroRegistros = '5';
+  }
+
+  loadFinancialProducts(): void {
+    this.financialProductService.getFinancialProducts().subscribe({
+      next: (products) => {
+        this.financialProducts = products;
+        console.log(
+          '🚀 ~ ProductListComponent ~ this.financialProductService.getFinancialProducts ~ products:',
+          products
+        );
+      },
+      error: (error) => {
+        console.error('There was an error!', error);
+        this.financialProducts = [];
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    });
   }
 
   previousPage() {}
