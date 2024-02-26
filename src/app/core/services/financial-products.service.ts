@@ -1,7 +1,7 @@
 // financial-products.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
 import { FinancialProduct } from '../models/financial-product.model'; // Asegúrate de crear este modelo
 import { ApiResponseItem } from 'src/app/shared/api-response-types';
 
@@ -17,6 +17,9 @@ export class FinancialProductsService {
   private baseUrl =
     'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products';
   private authorId = '241'; // Replace with your generated AuthorID
+
+  private productSource = new BehaviorSubject<FinancialProduct | null>(null);
+  currentProduct = this.productSource.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -65,16 +68,54 @@ export class FinancialProductsService {
     );
   }
 
-  addFinancialProduct(product: FinancialProduct): Observable<FinancialProduct> {
+  addAndUpdateFinancialProduct(
+    product: FinancialProduct,
+    isEditMode: boolean
+  ): Observable<FinancialProduct> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      authorId: this.authorId, // Asegúrate de que el backend requiere este header y ajusta según sea necesario
+      authorId: this.authorId,
     });
+
+    if (isEditMode) {
+      return this.http.put<FinancialProduct>(
+        `${this.baseUrl}`,
+        FinancialProduct.toDict(product),
+        { headers }
+      );
+    }
 
     return this.http.post<FinancialProduct>(
       this.baseUrl,
       FinancialProduct.toDict(product),
       { headers }
     );
+  }
+
+  deleteFinancialProduct(
+    product: FinancialProduct,
+    isEditMode: boolean
+  ): Observable<FinancialProduct> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      authorId: this.authorId,
+    });
+
+    if (isEditMode) {
+      return this.http.put<FinancialProduct>(
+        `${this.baseUrl}`,
+        FinancialProduct.toDict(product),
+        { headers }
+      );
+    }
+
+    return this.http.post<FinancialProduct>(
+      this.baseUrl,
+      FinancialProduct.toDict(product),
+      { headers }
+    );
+  }
+  changeProduct(product: FinancialProduct | null) {
+    this.productSource.next(product);
   }
 }

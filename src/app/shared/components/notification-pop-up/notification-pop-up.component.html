@@ -1,0 +1,7 @@
+<div class="popup-container" *ngIf="show">
+  <div class="popup">
+    <h2 [class]="messageType">{{ title }}</h2>
+    <p>{{ message }}</p>
+    <button (click)="closePopup()">Cerrar</button>
+  </div>
+</div>

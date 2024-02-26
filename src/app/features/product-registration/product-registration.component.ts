@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -6,10 +6,12 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FinancialProduct } from 'src/app/core/models/financial-product.model';
 import { FinancialProductsService } from 'src/app/core/services/financial-products.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-product-registration',
@@ -19,14 +21,23 @@ import { FinancialProductsService } from 'src/app/core/services/financial-produc
 export class ProductRegistrationComponent implements OnInit {
   productForm!: FormGroup;
   isLoading = false;
+  isEditMode = false;
+  currentProduct: FinancialProduct | null = null;
+  showSuccessMessage = false;
+  successMessage = '';
 
   constructor(
     private fb: FormBuilder,
-    private financialProductsService: FinancialProductsService
+    private financialProductsService: FinancialProductsService,
+    private notificationService: NotificationService,
+    private viewContainerRef: ViewContainerRef
   ) {}
 
   ngOnInit() {
     this.initializeForm();
+    this.checkEditMode();
+    // Proporciona el ViewContainerRef al servicio de notificaciones
+    this.notificationService.setViewContainerRef(this.viewContainerRef);
   }
 
   // Inicializa el formulario con validaciones y lógica de negocio.
@@ -37,7 +48,7 @@ export class ProductRegistrationComponent implements OnInit {
 
     this.productForm = this.fb.group({
       id: [
-        '',
+        { value: '', disabled: this.isEditMode },
         [
           Validators.required,
           Validators.minLength(3),
@@ -74,6 +85,31 @@ export class ProductRegistrationComponent implements OnInit {
       this.updateRevisionDate(value);
     });
   }
+  private checkEditMode(): void {
+    this.financialProductsService.currentProduct.subscribe((product) => {
+      if (product) {
+        this.isEditMode = true;
+        this.currentProduct = product; // Asume que tienes una propiedad para mantener el producto actual
+        this.initializeFormWithProduct(product); // Inicializa el formulario con los datos del producto
+      } else {
+        this.isEditMode = false;
+        this.currentProduct = null;
+        this.initializeForm();
+      }
+    });
+  }
+
+  private initializeFormWithProduct(product: FinancialProduct): void {
+    this.initializeForm();
+    this.productForm.patchValue({
+      id: product.id,
+      name: product.name,
+      description: product.description,
+      logo: product.logoUrl,
+      release_date: product.releaseDate.toISOString().substring(0, 10),
+      revision_date: product.revisionDate.toISOString().substring(0, 10),
+    });
+  }
 
   // Valida que la fecha de lanzamiento no sea anterior a hoy.
   validateReleaseDate(control: AbstractControl): { [key: string]: any } | null {
@@ -88,7 +124,7 @@ export class ProductRegistrationComponent implements OnInit {
 
   validateIdNotTaken(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<{ idTaken: true } | null> => {
-      if (!control.value) {
+      if (!control.value || this.isEditMode) {
         return of(null); // Si no hay valor, no se verifica el ID
       }
       return this.financialProductsService.checkIfIdExists(control.value).pipe(
@@ -111,8 +147,7 @@ export class ProductRegistrationComponent implements OnInit {
       ?.setValue(releaseDate.toISOString().substring(0, 10));
   }
 
-  // Crea un nuevo producto y maneja la respuesta.
-  createProduct(): void {
+  onSubmit(): void {
     if (this.productForm.valid) {
       this.isLoading = true;
       const productData = this.productForm.getRawValue(); // Usa getRawValue para incluir campos deshabilitados
@@ -125,14 +160,45 @@ export class ProductRegistrationComponent implements OnInit {
         productData.logo
       );
 
-      this.financialProductsService.addFinancialProduct(newProduct).subscribe({
-        next: () => console.log('Product created successfully'),
-        error: (error) => console.error('Error creating product:', error),
-        complete: () => {
-          this.isLoading = false;
-          this.resetForm();
-        },
-      });
+      this.financialProductsService
+        .addAndUpdateFinancialProduct(newProduct, this.isEditMode)
+        .subscribe({
+          next: () => {
+            this.resetForm();
+            this.isLoading = false;
+            if (this.isEditMode) {
+              this.notificationService.showNotification(
+                'Producto editado con éxito',
+                'Producto editado',
+                'success'
+              );
+            } else {
+              this.notificationService.showNotification(
+                'Producto creado con éxito',
+                'Producto creado',
+                'success'
+              );
+            }
+            this.isEditMode = false;
+          },
+          error: (error) => {
+            console.error('Error creating product:', error);
+            this.isLoading = false;
+            if (this.isEditMode) {
+              this.notificationService.showNotification(
+                'Error al editar el producto',
+                'Producto no editado',
+                'error'
+              );
+            } else {
+              this.notificationService.showNotification(
+                'Error al crear el producto',
+                'Producto no creado',
+                'error'
+              );
+            }
+          },
+        });
     } else {
       console.error('Form is not valid');
     }
@@ -140,6 +206,12 @@ export class ProductRegistrationComponent implements OnInit {
 
   // Restablece el formulario a su estado inicial
   resetForm(): void {
+    this.notificationService.showNotification(
+      'Mensaje de prueba',
+      'Título',
+      'success'
+    );
+
     this.productForm.reset();
     this.initializeForm(); // Re-inicializa el formulario para restablecer valores predeterminados y lógica
   }

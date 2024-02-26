@@ -7,9 +7,7 @@
       class="search-input"
       placeholder="Search..."
     />
-    <button routerLink="/product-registration" class="add-button">
-      Agregar
-    </button>
+    <button (click)="editProduct(null)" class="add-button">Agregar</button>
   </div>
 
   <div class="container-table">
@@ -52,8 +50,8 @@
                 <i class="fa fa-ellipsis-v"></i>
               </div>
               <div class="dropdown-content" *ngIf="selectedDropdownIndex === i">
-                <a href="#">Editar</a>
-                <a href="#">Eliminar</a>
+                <a (click)="editProduct(product)">Editar</a>
+                <a (click)="deleteProduct(product)">Eliminar</a>
               </div>
             </div>
           </td>

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { FinancialProductsService } from '../../core/services/financial-products.service';
 import { FinancialProduct } from '../../core/models/financial-product.model';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
+import { Router } from '@angular/router';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-product-list',
@@ -28,7 +30,12 @@ export class ProductListComponent {
   searchControl = new FormControl('');
   registerControl = new FormControl('');
 
-  constructor(private financialProductService: FinancialProductsService) {}
+  constructor(
+    private financialProductService: FinancialProductsService,
+    private router: Router,
+    private notificationService: NotificationService,
+    private viewContainerRef: ViewContainerRef
+  ) {}
 
   ngOnInit() {
     this.registerControl.setValue(String(this.pageSize));
@@ -37,6 +44,7 @@ export class ProductListComponent {
     this.loadFinancialProducts();
     this.setupSearch();
     this.setupNumberRecords();
+    this.notificationService.setViewContainerRef(this.viewContainerRef);
   }
 
   setupNumberRecords() {
@@ -94,9 +102,15 @@ export class ProductListComponent {
     this.currentPage = page;
     this.loadFinancialProducts(page);
   }
-  deleteProduct(producto: FinancialProduct) {}
-  editProduct(producto: FinancialProduct) {}
-
+  deleteProduct(producto: FinancialProduct) {
+    this.notificationService.showConfirmation(producto);
+    this.selectedDropdownIndex = null;
+  }
+  editProduct(product: FinancialProduct | null) {
+    this.selectedDropdownIndex = null;
+    this.financialProductService.changeProduct(product);
+    this.router.navigate(['/product-registration']);
+  }
   toggleDropdown(index: number): void {
     this.selectedDropdownIndex =
       this.selectedDropdownIndex === index ? null : index;
