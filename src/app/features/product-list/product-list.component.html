@@ -1,0 +1,79 @@
+<!-- product-list.component.html -->
+<div class="product-list-container">
+  <div class="search-containe">
+    <input type="text" class="search-input" placeholder="Search..." />
+    <button class="add-button">Agregar</button>
+  </div>
+
+  <div class="container-table">
+    <table class="product-table">
+      <thead>
+        <tr>
+          <th class="product-logo">Logo</th>
+          <th>Nombre del producto</th>
+          <th>Descripción <i class="fa fa-info-circle"></i></th>
+          <th>
+            Fecha de liberación
+            <i class="fa fa-info-circle"></i>
+          </th>
+          <th>Fecha de reestructuración <i class="fa fa-info-circle"></i></th>
+          <th>{{ " " }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="loading" class="skeleton">
+          <td colspan="6">
+            <div class="spinner"></div>
+          </td>
+        </tr>
+
+        <!-- Angular repeater for each product -->
+        <tr *ngFor="let product of products; let i = index">
+          <td class="product-logo">
+            <img src="{{ product.logoUrl }}" alt="Logo" />
+          </td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.releaseDate | date : "dd/MM/yyyy" }}</td>
+          <td>{{ product.restructuringDate | date : "dd/MM/yyyy" }}</td>
+          <td class="kebab-menu-cell">
+            <div class="kebab-menu-cell">
+              <div class="kebab-menu" (click)="toggleDropdown(i)">
+                <i class="fa fa-ellipsis-v"></i>
+              </div>
+              <div class="dropdown-content" *ngIf="selectedDropdownIndex === i">
+                <a href="#">Editar</a>
+                <a href="#">Eliminar</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination-controls">
+      <!-- Selector de cantidad de registros -->
+      <!-- Información de registros mostrados -->
+      <div class="records-info">
+        <p class="total-results">{{ products.length }} Resultados</p>
+        <div class="custom-select-wrapper">
+          <select name="miselect" [(ngModel)]="numeroRegistros">
+            <option [value]="item" *ngFor="let item of lista">
+              {{ item }}
+            </option>
+          </select>
+          <i class="fa fa-sort-desc" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <!-- Navegación de paginación -->
+      <!-- <div class="pagination-nav">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">
+          Anterior
+        </button>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Siguiente
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
