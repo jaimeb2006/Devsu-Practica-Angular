@@ -22,7 +22,8 @@ export class FinancialProductsService {
 
   getFinancialProducts(
     page: number = 1,
-    pageSize: number = 5
+    pageSize: number = 5,
+    searchTerm: string = ''
   ): Observable<PaginatedFinancialProducts> {
     const headers = new HttpHeaders({
       authorId: this.authorId,
@@ -31,10 +32,16 @@ export class FinancialProductsService {
       map(FinancialProduct.fromApiResponse),
 
       map((products) => {
+        if (searchTerm) {
+          products = products.filter((product) =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+          );
+        }
         const totalRecords = products.length;
         const start = (page - 1) * pageSize;
         const end = start + pageSize;
         const paginatedProducts = products.slice(start, end);
+
         return {
           products: paginatedProducts,
           totalRecords: totalRecords,

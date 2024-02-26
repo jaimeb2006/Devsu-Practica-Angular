@@ -19,9 +19,9 @@ export class ProductListComponent {
   pages: number[] = [];
 
   lista: string[] = ['5', '10', '20'];
+  searchTerm: string = '';
 
   financialProducts: FinancialProduct[] = [];
-  filteredProducts: FinancialProduct[] = [];
 
   selectedDropdownIndex: number | null = null;
 
@@ -50,11 +50,10 @@ export class ProductListComponent {
 
   loadFinancialProducts(page: number = 1): void {
     this.financialProductService
-      .getFinancialProducts(page, this.pageSize)
+      .getFinancialProducts(page, this.pageSize, this.searchTerm)
       .subscribe({
         next: ({ products, totalRecords }) => {
           this.financialProducts = products;
-          this.filteredProducts = products;
           this.totalProducts = totalRecords;
           this.totalPages = Math.ceil(this.totalProducts / 5);
           this.calculateTotalPages();
@@ -63,7 +62,6 @@ export class ProductListComponent {
         error: (error) => {
           console.error('There was an error!', error);
           this.financialProducts = [];
-          this.filteredProducts = [];
         },
         complete: () => {
           this.loading = false;
@@ -78,14 +76,9 @@ export class ProductListComponent {
         map((searchTerm) => searchTerm ?? '')
       )
       .subscribe((searchTerm) => {
-        this.filterProducts(searchTerm);
+        this.searchTerm = searchTerm;
+        this.loadFinancialProducts();
       });
-  }
-  filterProducts(searchTerm: string) {
-    this.filteredProducts = this.financialProducts.filter((product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    this.totalProducts = this.filteredProducts.length;
   }
 
   calculateTotalPages() {
