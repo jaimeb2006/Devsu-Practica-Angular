@@ -1,27 +1,95 @@
-# DevsuPracticaAngular
+# Devsu-Practica-Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.10.
+## Sobre el Proyecto
 
-## Development server
+Este proyecto ha sido desarrollado por Jaime Benalcazar como una solución moderna para la gestión de productos financieros utilizando Angular. Destaca por su interfaz intuitiva y funcionalidades avanzadas, diseñadas para ofrecer una experiencia de usuario óptima.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Características
 
-## Code scaffolding
+- **Listado y gestión de productos financieros:** Permite a los usuarios visualizar, agregar, editar y eliminar productos.
+- **Interfaz de Usuario Amigable:** Diseño responsive y fácil de navegar.
+- **Notificaciones y Validaciones:** Implementa notificaciones para acciones de usuario y validaciones para el ingreso de datos.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tecnologías Utilizadas
 
-## Build
+- Angular 15.2.0
+- TypeScript 4.9.4
+- Jest para pruebas unitarias
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Instalación y Ejecución
 
-## Running unit tests
+Para ejecutar este proyecto localmente:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+npm install
+npm start
+```
 
-## Running end-to-end tests
+Para construir el proyecto para producción:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm run build
+```
 
-## Further help
+Para ejecutar las pruebas unitarias:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+npm run test
+```
+
+## Cobertura de Pruebas
+
+Este proyecto alcanza una cobertura de pruebas significativa, asegurando la calidad y robustez del código:
+
+-----------------------------------------|---------|----------|---------|---------|-----------------------------------
+File | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+------------------------------------------|---------|----------|---------|---------|-----------------------------------
+All files | 79.91 | 55.88 | 70.58 | 79.48 |  
+ core/models | 81.81 | 100 | 60 | 81.81 | 38-43  
+ core/services | 54.38 | 40 | 38.88 | 52.72 | 44-54,72-73,117-128,20-62  
+ features/product-list | 93.75 | 60 | 88.88 | 95.08 | 52-55  
+ features/product-registration | 82.35 | 64.28 | 82.35 | 82.08 | 92-94,104-105,129,132,167,183-191
+shared/components | 100 | 100 | 100 | 100 |  
+-----------------------------------------|---------|----------|---------|---------|-----------------------------------
+
+## Capturas de Pantalla
+
+### Interfaz Principal
+
+![Interfaz Principal](screenshots\Captura 1.JPG)
+
+### Gestión de Productos
+
+![Gestión de Productos](screenshots\Captura .JPG)
+
+### Errores Formulario
+
+![Errores Formulario](screenshots\Captura 2.JPG)
+
+### Notificaciones
+
+![Notificaciones](screenshots\Captura 3.JPG)
+
+### Búsqueda y Paginación
+
+![Búsqueda y Paginación](screenshots\Captura 8.JPG)
+
+## Eliminar Producto
+
+![Búsqueda y Paginación](screenshots\Captura 7.JPG)
+
+## Editar Producto
+
+![Búsqueda y Paginación](screenshots\Captura 6.JPG)
+
+## Contribuciones
+
+Las contribuciones son bienvenidas. Por favor, realiza un fork del proyecto y envía un pull request con tus cambios.
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulte el archivo `LICENSE` para obtener más detalles.
+
+## Acerca del Desarrollador
+
+**Jaime Benalcazar** - Apasionado por el desarrollo de soluciones tecnológicas eficientes y efectivas.
