@@ -66,25 +66,25 @@ npm run test
 ### Interfaz de Usuario
 
 Interfaz Principal
-![Interfaz Principal](screenshots/Captura1.JPG)
+![Interfaz Principal](screenshots/Captura%201.JPG)
 
 Gestión de Productos
-![Gestión de Productos](screenshots/Captura.JPG)
+![Gestión de Productos](screenshots/Captura%20.JPG)
 
 Errores en el Formulario
-![Errores Formulario](screenshots/Captura2.JPG)
+![Errores Formulario](screenshots/Captura%202.JPG)
 
 Notificaciones
-![Notificaciones](screenshots/Captura3.JPG)
+![Notificaciones](screenshots/Captura%203.JPG)
 
 Búsqueda y Paginación
-![Búsqueda y Paginación](screenshots/Captura8.JPG)
+![Búsqueda y Paginación](screenshots/Captura%208.JPG)
 
 Eliminar Producto
-![Eliminar Producto](screenshots/Captura7.JPG)
+![Eliminar Producto](screenshots/Captura%207.JPG)
 
 Editar Producto
-![Editar Producto](screenshots/Captura6.JPG)
+![Editar Producto](screenshots/Captura%206.JPG)
 
 ## Contribuciones
 
