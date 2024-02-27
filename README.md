@@ -37,50 +37,54 @@ Para ejecutar las pruebas unitarias:
 npm run test
 ```
 
-## Cobertura de Pruebas
+### Resultados de los Test
 
-Este proyecto alcanza una cobertura de pruebas significativa, asegurando la calidad y robustez del código:
+| File                                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                 |
+| ---------------------------------------- | ------- | -------- | ------- | ------- | --------------------------------- |
+| All files                                | 79.91   | 55.88    | 70.58   | 79.48   |                                   |
+| core/models                              | 81.81   | 100      | 60      | 81.81   |                                   |
+| financial-product.model.ts               | 81.81   | 100      | 60      | 81.81   | 38-43                             |
+| core/services                            | 54.38   | 40       | 38.88   | 52.72   |                                   |
+| financial-products.service.ts            | 63.41   | 66.66    | 53.84   | 62.5    | 44-54,72-73,117-128               |
+| notification.service.ts                  | 31.25   | 0        | 0       | 26.66   | 20-62                             |
+| features/product-list                    | 93.75   | 60       | 88.88   | 95.08   |                                   |
+| product-list.component.html              | 100     | 100      | 100     | 100     |                                   |
+| product-list.component.ts                | 93.65   | 60       | 88.88   | 95      | 52-55                             |
+| features/product-registration            | 82.35   | 64.28    | 82.35   | 82.08   |                                   |
+| product-registration.component.html      | 100     | 100      | 100     | 100     |                                   |
+| product-registration.component.ts        | 82.08   | 64.28    | 82.35   | 81.81   | 92-94,104-105,129,132,167,183-191 |
+| shared/components/banco-logo             | 100     | 100      | 100     | 100     |                                   |
+| banco-logo.component.html                | 100     | 100      | 100     | 100     |                                   |
+| banco-logo.component.ts                  | 100     | 100      | 100     | 100     |                                   |
+| shared/components/notification-confirmar | 100     | 100      | 100     | 100     |                                   |
+| notification-confirmar.component.html    | 100     | 100      | 100     | 100     |                                   |
+| notification-confirmar.component.ts      | 100     | 100      | 100     | 100     |                                   |
+| shared/components/notification-pop-up    | 61.53   | 100      | 33.33   | 58.33   |                                   |
+| notification-pop-up.component.html       | 100     | 100      | 100     | 100     |                                   |
+| notification-pop-up.component.ts         | 58.33   | 100      | 33.33   | 54.54   | 21-28                             |
 
------------------------------------------|---------|----------|---------|---------|-----------------------------------
-File | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
-------------------------------------------|---------|----------|---------|---------|-----------------------------------
-All files | 79.91 | 55.88 | 70.58 | 79.48 |  
- core/models | 81.81 | 100 | 60 | 81.81 | 38-43  
- core/services | 54.38 | 40 | 38.88 | 52.72 | 44-54,72-73,117-128,20-62  
- features/product-list | 93.75 | 60 | 88.88 | 95.08 | 52-55  
- features/product-registration | 82.35 | 64.28 | 82.35 | 82.08 | 92-94,104-105,129,132,167,183-191
-shared/components | 100 | 100 | 100 | 100 |  
------------------------------------------|---------|----------|---------|---------|-----------------------------------
+### Interfaz de Usuario
 
-## Capturas de Pantalla
+Interfaz Principal
+![Interfaz Principal](screenshots/Captura1.JPG)
 
-### Interfaz Principal
+Gestión de Productos
+![Gestión de Productos](screenshots/Captura.JPG)
 
-![Interfaz Principal](screenshots\Captura 1.JPG)
+Errores en el Formulario
+![Errores Formulario](screenshots/Captura2.JPG)
 
-### Gestión de Productos
+Notificaciones
+![Notificaciones](screenshots/Captura3.JPG)
 
-![Gestión de Productos](screenshots\Captura .JPG)
+Búsqueda y Paginación
+![Búsqueda y Paginación](screenshots/Captura8.JPG)
 
-### Errores Formulario
+Eliminar Producto
+![Eliminar Producto](screenshots/Captura7.JPG)
 
-![Errores Formulario](screenshots\Captura 2.JPG)
-
-### Notificaciones
-
-![Notificaciones](screenshots\Captura 3.JPG)
-
-### Búsqueda y Paginación
-
-![Búsqueda y Paginación](screenshots\Captura 8.JPG)
-
-## Eliminar Producto
-
-![Búsqueda y Paginación](screenshots\Captura 7.JPG)
-
-## Editar Producto
-
-![Búsqueda y Paginación](screenshots\Captura 6.JPG)
+Editar Producto
+![Editar Producto](screenshots/Captura6.JPG)
 
 ## Contribuciones
 
