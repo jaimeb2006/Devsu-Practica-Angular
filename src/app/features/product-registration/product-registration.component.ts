@@ -206,12 +206,6 @@ export class ProductRegistrationComponent implements OnInit {
 
   // Restablece el formulario a su estado inicial
   resetForm(): void {
-    this.notificationService.showNotification(
-      'Mensaje de prueba',
-      'Título',
-      'success'
-    );
-
     this.productForm.reset();
     this.initializeForm(); // Re-inicializa el formulario para restablecer valores predeterminados y lógica
   }

@@ -66,13 +66,12 @@ export class ProductListComponent {
           this.totalPages = Math.ceil(this.totalProducts / 5);
           this.calculateTotalPages();
           this.generatePageNumbers();
+          this.loading = false;
         },
         error: (error) => {
           console.error('There was an error!', error);
-          this.financialProducts = [];
-        },
-        complete: () => {
           this.loading = false;
+          this.financialProducts = [];
         },
       });
   }

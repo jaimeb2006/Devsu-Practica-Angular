@@ -29,3 +29,67 @@
     transform: rotate(360deg);
   }
 }
+
+.confirmation-popup {
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent background */
+  position: fixed; /* Overlay */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-content {
+  background: white;
+  border-radius: 10px;
+  padding: 20px 0px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.confirmation-message {
+  font-size: 16px;
+  margin-bottom: 40px;
+  padding-bottom: 60px;
+  margin: 10px 30px;
+}
+
+.btn {
+  padding: 10px 30px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.cancel-button {
+  background-color: #cbc9c9;
+  color: #102659;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.confirm-button {
+  background-color: #eace14;
+  color: #333;
+  font-size: smaller;
+  font-weight: bold;
+}
+
+.confirmation-buttons,
+.confirmation-message {
+  background-color: white;
+  font-size: smaller;
+}
+
+.confirmation-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}

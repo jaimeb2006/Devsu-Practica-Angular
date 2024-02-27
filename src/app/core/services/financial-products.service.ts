@@ -1,7 +1,14 @@
 // financial-products.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Observable, catchError, map, of } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  catchError,
+  map,
+  of,
+  throwError,
+} from 'rxjs';
 import { FinancialProduct } from '../models/financial-product.model'; // Asegúrate de crear este modelo
 import { ApiResponseItem } from 'src/app/shared/api-response-types';
 
@@ -92,27 +99,29 @@ export class FinancialProductsService {
     );
   }
 
-  deleteFinancialProduct(
-    product: FinancialProduct,
-    isEditMode: boolean
-  ): Observable<FinancialProduct> {
+  deleteFinancialProduct(id: string): Observable<string> {
+    console.log(
+      '🚀 ~ FinancialProductsService ~ deleteFinancialProduct ~ id:',
+      id
+    );
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       authorId: this.authorId,
     });
 
-    if (isEditMode) {
-      return this.http.put<FinancialProduct>(
-        `${this.baseUrl}`,
-        FinancialProduct.toDict(product),
-        { headers }
-      );
-    }
-
-    return this.http.post<FinancialProduct>(
-      this.baseUrl,
-      FinancialProduct.toDict(product),
-      { headers }
+    return this.http.delete(`${this.baseUrl}/?id=${id}`, { headers }).pipe(
+      map((response: any) => {
+        return 'Producto eliminado con éxito';
+      }),
+      catchError((error) => {
+        if (error.status === 200) {
+          return of('Producto eliminado con éxito');
+        }
+        // Manejo de errores
+        return throwError(
+          () => new Error('Error al eliminar el producto: ' + error.message)
+        );
+      })
     );
   }
   changeProduct(product: FinancialProduct | null) {
