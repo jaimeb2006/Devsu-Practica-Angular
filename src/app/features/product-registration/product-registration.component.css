@@ -120,3 +120,30 @@
 .btn {
   font-size: smaller;
 }
+
+@media screen and (max-width: 650px) {
+  .form-container {
+    margin: 10px 10px;
+  }
+  .form-group {
+    margin: 5px 2px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .form-actions {
+    padding: 10px 30px;
+    gap: 5px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+    padding: 10px 10px;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}

@@ -237,3 +237,23 @@ product-table th #product-logo {
 .page-item.disabled:hover span {
   background-color: transparent;
 }
+
+@media screen and (max-width: 500px) {
+  .search-containe {
+    flex-direction: column;
+  }
+  .search-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .product-list-container {
+    padding: 30px 10px;
+  }
+}
+
+.product-table th,
+.product-table td {
+  max-width: 210px; /* Ajusta este valor según necesites */
+  word-wrap: break-word;
+  overflow: auto;
+}
