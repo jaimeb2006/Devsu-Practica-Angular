@@ -4,8 +4,8 @@ import {
   ViewContainerRef,
   ComponentRef,
 } from '@angular/core';
-import { NotificationConfirmarComponent } from 'src/app/shared/components/notification-confirmar/notification-confirmar.component';
-import { NotificationPopUpComponent } from 'src/app/shared/components/notification-pop-up/notification-pop-up.component';
+import { NotificationConfirmarComponent } from '../../shared/components/notification-confirmar/notification-confirmar.component';
+import { NotificationPopUpComponent } from '../../shared/components/notification-pop-up/notification-pop-up.component';
 import { FinancialProduct } from '../models/financial-product.model';
 
 @Injectable({
@@ -36,10 +36,7 @@ export class NotificationService {
   }
 
   // Método genérico privado para crear componentes de notificación
-  private createComponent<T>(
-    component: Type<T>,
-    options: any
-  ): ComponentRef<T> {
+  public createComponent<T>(component: Type<T>, options: any): ComponentRef<T> {
     // ... verifica que ViewContainerRef ha sido establecido
 
     // Crea el componente
@@ -59,7 +56,7 @@ export class NotificationService {
         producto: options.producto,
       });
     } else {
-      console.error('Tipo de componente no reconocido para display');
+      // console.error('Tipo de componente no reconocido para display');
     }
 
     return componentRef;

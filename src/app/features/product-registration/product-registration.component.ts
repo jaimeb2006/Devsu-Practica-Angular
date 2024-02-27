@@ -4,14 +4,15 @@ import {
   AsyncValidatorFn,
   FormBuilder,
   FormGroup,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { FinancialProduct } from 'src/app/core/models/financial-product.model';
-import { FinancialProductsService } from 'src/app/core/services/financial-products.service';
-import { NotificationService } from 'src/app/core/services/notification.service';
+import { FinancialProduct } from '../../core/models/financial-product.model';
+import { FinancialProductsService } from '../../core/services/financial-products.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-product-registration',
@@ -85,7 +86,7 @@ export class ProductRegistrationComponent implements OnInit {
       this.updateRevisionDate(value);
     });
   }
-  private checkEditMode(): void {
+  public checkEditMode(): void {
     this.financialProductsService.currentProduct.subscribe((product) => {
       if (product) {
         this.isEditMode = true;
@@ -123,18 +124,14 @@ export class ProductRegistrationComponent implements OnInit {
   // Valida que el ID del producto no esté ya tomado.
 
   validateIdNotTaken(): AsyncValidatorFn {
-    return (control: AbstractControl): Observable<{ idTaken: true } | null> => {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value || this.isEditMode) {
-        return of(null); // Si no hay valor, no se verifica el ID
+        return of(null) as Observable<ValidationErrors | null>;
       }
       return this.financialProductsService.checkIfIdExists(control.value).pipe(
-        catchError((e) => {
-          return of(null); // Manejo de errores, asumiendo no tomado si hay error
-        }),
-        map((isTaken) => {
-          return isTaken ? { idTaken: true } : null;
-        })
-      );
+        catchError(() => of(null)),
+        map((isTaken) => (isTaken ? { idTaken: true } : null))
+      ) as Observable<ValidationErrors | null>;
     };
   }
 
@@ -182,7 +179,7 @@ export class ProductRegistrationComponent implements OnInit {
             this.isEditMode = false;
           },
           error: (error) => {
-            console.error('Error creating product:', error);
+            // console.error('Error creating product:', error);
             this.isLoading = false;
             if (this.isEditMode) {
               this.notificationService.showNotification(
@@ -200,7 +197,7 @@ export class ProductRegistrationComponent implements OnInit {
           },
         });
     } else {
-      console.error('Form is not valid');
+      // console.error('Form is not valid');
     }
   }
 

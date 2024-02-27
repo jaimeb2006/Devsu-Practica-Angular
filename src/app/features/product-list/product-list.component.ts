@@ -4,7 +4,7 @@ import { FinancialProduct } from '../../core/models/financial-product.model';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs';
 import { Router } from '@angular/router';
-import { NotificationService } from 'src/app/core/services/notification.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-product-list',
@@ -41,9 +41,9 @@ export class ProductListComponent {
     this.registerControl.setValue(String(this.pageSize));
     this.currentPage = 1;
     this.totalPages = 1;
+    this.setupNumberRecords();
     this.loadFinancialProducts();
     this.setupSearch();
-    this.setupNumberRecords();
     this.notificationService.setViewContainerRef(this.viewContainerRef);
   }
 
@@ -69,7 +69,7 @@ export class ProductListComponent {
           this.loading = false;
         },
         error: (error) => {
-          console.error('There was an error!', error);
+          console.error('There was an error!');
           this.loading = false;
           this.financialProducts = [];
         },

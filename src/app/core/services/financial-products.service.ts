@@ -10,7 +10,7 @@ import {
   throwError,
 } from 'rxjs';
 import { FinancialProduct } from '../models/financial-product.model'; // Asegúrate de crear este modelo
-import { ApiResponseItem } from 'src/app/shared/api-response-types';
+import { ApiResponseItem } from '../../shared/api-response-types';
 
 interface PaginatedFinancialProducts {
   products: FinancialProduct[];
@@ -21,7 +21,7 @@ interface PaginatedFinancialProducts {
   providedIn: 'root',
 })
 export class FinancialProductsService {
-  private baseUrl =
+  public baseUrl =
     'https://tribu-ti-staffing-desarrollo-afangwbmcrhucqfh.z01.azurefd.net/ipf-msa-productosfinancieros/bp/products';
   private authorId = '241'; // Replace with your generated AuthorID
 

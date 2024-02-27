@@ -1,4 +1,5 @@
-import { ApiResponseItem } from 'src/app/shared/api-response-types';
+import { ApiResponseItem } from '../../shared/api-response-types';
+
 interface IFinancialProduct {
   id: string;
   name: string;

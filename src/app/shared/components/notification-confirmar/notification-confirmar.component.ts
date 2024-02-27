@@ -1,8 +1,8 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { FinancialProduct } from '../../../core/models/financial-product.model';
-import { FinancialProductsService } from 'src/app/core/services/financial-products.service';
-import { NotificationService } from 'src/app/core/services/notification.service';
 import { Router } from '@angular/router';
+import { FinancialProductsService } from '../../../core/services/financial-products.service';
+import { NotificationService } from '../../../core/services/notification.service';
 
 @Component({
   selector: 'app-notification-confirmar',
@@ -35,11 +35,6 @@ export class NotificationConfirmarComponent {
     this.notificationService.setViewContainerRef(this.viewContainerRef);
     this.financialProductsService.deleteFinancialProduct(this.id).subscribe({
       next: (response) => {
-        console.log(
-          '🚀 ~ NotificationConfirmarComponent ~ this.financialProductsService.deleteFinancialProduct ~ response:',
-          response
-        );
-
         this.notificationService.showNotification(
           'Producto eliminado con éxito',
           'Producto Eliminado',
