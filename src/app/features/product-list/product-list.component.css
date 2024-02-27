@@ -203,6 +203,7 @@ product-table th #product-logo {
   align-items: center;
   justify-content: center;
   font-size: smaller;
+  background-color: white;
 }
 
 .page-item {
@@ -249,11 +250,4 @@ product-table th #product-logo {
   .product-list-container {
     padding: 30px 10px;
   }
-}
-
-.product-table th,
-.product-table td {
-  max-width: 210px; /* Ajusta este valor según necesites */
-  word-wrap: break-word;
-  overflow: auto;
 }
