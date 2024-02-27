@@ -16,6 +16,12 @@ Este proyecto ha sido desarrollado por Jaime Benalcazar como una solución moder
 - TypeScript 4.9.4
 - Jest para pruebas unitarias
 
+## Demostración en Vivo
+
+Este proyecto está desplegado y disponible para su acceso público en Firebase. Puedes ver la aplicación en funcionamiento a través del siguiente enlace:
+
+[Devsu-Practica-Angular en Firebase](https://devsu-practica-angular.web.app)
+
 ## Instalación y Ejecución
 
 Para ejecutar este proyecto localmente:
